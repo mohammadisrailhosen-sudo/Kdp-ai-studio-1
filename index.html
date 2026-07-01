@@ -36,7 +36,7 @@
             font-size: 26px;
             text-align: center;
             margin-bottom: 5px;
-            color: #ff9900; /* Amazon KDP Orange */
+            color: #ff9900;
         }
 
         p.subtitle {
@@ -160,14 +160,14 @@
         <p class="subtitle">Create Premium Copyright-Free Coloring Pages, Covers & Research Data</p>
 
         <div class="output-box" id="aiResponse">
-            আপনার KDP ওয়েবসাইট স্টুডিও রেডি! 
-            ১. নিশ আইডিয়া, কি-ওয়ার্ড বা বইয়ের ডেসক্রিপশনের জন্য লিখে "🔍 KDP Research" বাটনে ক্লিক করুন।
-            ২. কপিরাইট-ফ্রি কালারিং পেজের জন্য "🎨 Make Coloring" বাটনে ক্লিক করুন।
-            ৩. আকর্ষণীয় কভার ব্যাকগ্রাউন্ডের জন্য "📘 Make Cover" বাটনে ক্লিক করুন।
+            আপনার KDP ওয়েবসাইট স্টুдио রেডি! <br><br>
+            ১. নিশ আইডিয়া বা কি-ওয়ার্ডের জন্য লিখে "🔍 KDP Research" বাটনে ক্লিক করুন।<br>
+            ২. কালারিং পেজের জন্য "🎨 Make Coloring" বাটনে ক্লিক করুন।<br>
+            ৩. বুক কভারের জন্য "📘 Make Cover" বাটনে ক্লিক করুন।
         </div>
 
         <div class="input-wrapper">
-            <textarea id="promptText" placeholder="এখানে আপনার টপিক বা প্রশ্ন লিখুন... (যেমন: 'Cute Kawaii Food coloring book interior' অথবা 'Write a KDP description for a kids puzzle book')"></textarea>
+            <textarea id="promptText" placeholder="এখানে আপনার টপিক লিখুন... (যেমন: 'Cute Kawaii Food coloring book interior')"></textarea>
             
             <div class="action-bar">
                 <button class="btn btn-voice" id="startVoice" title="Voice Input">🎤</button>
@@ -195,7 +195,6 @@
         const downloadBtn = document.getElementById('downloadBtn');
         const status = document.getElementById('status');
 
-        // ১. রিয়েল ভয়েস ইনপুট (Bangla + English)
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recog = new SpeechRecognition();
@@ -210,350 +209,53 @@
                 promptText.value = e.results[0][0].transcript;
                 status.innerText = "কথা রেকর্ড হয়েছে!";
             };
-            recog.onerror = () => { status.innerText = "স্পষ্ট শোনা যায়নি, আবার চেষ্টা করুন।"; };
+            recog.onerror = () => { status.innerText = "স্পষ্ট শোনা যায়নি!"; };
             recog.onend = () => { if(status.innerText.includes("Listening")) status.innerText = ""; };
         } else {
             document.getElementById('startVoice').style.display = 'none';
         }
 
-        // ২. KDP টেক্সট রিসার্চ ইঞ্জিন (Llama 3 / Gemini Powered)
         document.getElementById('sendChat').addEventListener('click', async () => {
             const text = promptText.value.trim();
-            if(!text) return alert("দয়া করে কিছু একটা লিখুন বা মুখে বলুন!");
+            if(!text) return alert("দয়া করে কিছু একটা লিখুন!");
 
-            aiResponse.innerText = "Analyzing KDP Data... গুছিয়ে লিখছি... 📊";
+            aiResponse.innerText = "Analyzing KDP Data... 📊";
             imgContainer.style.display = 'none';
-            status.innerText = "";
 
             try {
-                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(text + " (Provide a highly professional, copyright-free Amazon KDP standard response)")}`);
+                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(text + " (Provide a professional Amazon KDP response)")}`);
                 const reply = await res.text();
-                aiResponse.innerText = reply || "দুঃখিত, উত্তরটি তৈরি করা যায়নি। আবার চেষ্টা করুন।";
+                aiResponse.innerText = reply;
             } catch (err) {
-                aiResponse.innerText = "নেটওয়ার্ক সমস্যা! দয়া করে ইন্টারনেট কানেকশন চেক করুন।";
+                aiResponse.innerText = "নেটওয়ার্ক সমস্যা!";
             }
         });
 
-        // ৩. ইমেজ মেকিং হ্যান্ডলার (Coloring & Cover)
         document.getElementById('sendColoring').addEventListener('click', () => generateAsset('coloring'));
         document.getElementById('sendCover').addEventListener('click', () => generateAsset('cover'));
 
         function generateAsset(type) {
             const text = promptText.value.trim();
-            if(!text) return alert("কীসের ছবি তৈরি করতে চান তা বক্সে লিখুন!");
+            if(!text) return alert("কীসের ছবি তৈরি করতে চান তা বকে লিখুন!");
 
-            aiResponse.innerText = type === 'coloring' 
-                ? "KDP ইন্টেরিয়র কালারিং পেজ তৈরি হচ্ছে... 🎨 (কপিরাইট ফিল্টার সক্রিয়)" 
-                : "KDP বুক কভার আর্ট তৈরি হচ্ছে... 📘 (হাই-রেজোলিউশন মোড)";
-                
+            aiResponse.innerText = type === 'coloring' ? "কালারিং পেজ তৈরি হচ্ছে... 🎨" : "বুক কভার তৈরি হচ্ছে... 📘";
             imgContainer.style.display = 'none';
 
-            let finalPrompt = "";
-            if (type === 'coloring') {
-                finalPrompt = `coloring page for kids, ${text}, copyright-free original vector art, pure solid white background, thick black bold outlines, no shading, no gradients, no grey lines, low detail, professional KDP interior, crisp line art style`;
-            } else {
-                finalPrompt = `premium Amazon KDP book cover design background, ${text}, high resolution 4k, vivid deep colors, professional digital concept art, commercial illustration, no text on image, master piece, ultra detailed`;
-            }<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KDP AI Publisher Studio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background: #0f0f11;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .web-container {
-            background: #18181c;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            max-width: 600px;
-            width: 100%;
-            padding: 30px;
-            border: 1px solid #2a2a32;
-        }
-
-        h1 {
-            font-size: 26px;
-            text-align: center;
-            margin-bottom: 5px;
-            color: #ff9900; /* Amazon KDP Orange */
-        }
-
-        p.subtitle {
-            font-size: 13px;
-            color: #aaa;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .output-box {
-            background: #0f0f11;
-            padding: 20px;
-            border-radius: 16px;
-            min-height: 180px;
-            max-height: 350px;
-            overflow-y: auto;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            border: 1px solid #2a2a32;
-            white-space: pre-line;
-        }
-
-        .input-wrapper {
-            background: #22222a;
-            border-radius: 16px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 80px;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #fff;
-            font-size: 16px;
-            resize: none;
-        }
-
-        textarea::placeholder {
-            color: #666;
-        }
-
-        .action-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: white;
-        }
-
-        .btn-voice { background: #ea4335; max-width: 55px; font-size: 18px; }
-        .btn-chat { background: #ff9900; color: #111; }
-        .btn-coloring { background: #2980b9; }
-        .btn-cover { background: #27ae60; }
-        
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        .image-display {
-            text-align: center;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .image-display img {
-            max-width: 100%;
-            border-radius: 16px;
-            border: 1px solid #2a2a32;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        }
-
-        .download-link {
-            display: inline-block;
-            margin-top: 15px;
-            background: #ffffff;
-            color: #111;
-            padding: 10px 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .download-link:hover {
-            background: #e5e5e5;
-        }
-
-        .status-msg {
-            font-size: 13px;
-            color: #ff9900;
-            text-align: center;
-            margin-top: 5px;
-            min-height: 18px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="web-container">
-        <h1>📚 KDP AI Publisher Studio</h1>
-        <p class="subtitle">Create Premium Copyright-Free Coloring Pages, Covers & Research Data</p>
-
-        <div class="output-box" id="aiResponse">
-            আপনার KDP ওয়েবসাইট স্টুডিও রেডি! 
-            ১. নিশ আইডিয়া, কি-ওয়ার্ড বা বইয়ের ডেসক্রিপশনের জন্য লিখে "🔍 KDP Research" বাটনে ক্লিক করুন।
-            ২. কপিরাইট-ফ্রি কালারিং পেজের জন্য "🎨 Make Coloring" বাটনে ক্লিক করুন।
-            ৩. আকর্ষণীয় কভার ব্যাকগ্রাউন্ডের জন্য "📘 Make Cover" বাটনে ক্লিক করুন।
-        </div>
-
-        <div class="input-wrapper">
-            <textarea id="promptText" placeholder="এখানে আপনার টপিক বা প্রশ্ন লিখুন... (যেমন: 'Cute Kawaii Food coloring book interior' অথবা 'Write a KDP description for a kids puzzle book')"></textarea>
-            
-            <div class="action-bar">
-                <button class="btn btn-voice" id="startVoice" title="Voice Input">🎤</button>
-                <button class="btn btn-chat" id="sendChat">🔍 KDP Research</button>
-            </div>
-            <div class="action-bar">
-                <button class="btn btn-coloring" id="sendColoring">🎨 Make Coloring</button>
-                <button class="btn btn-cover" id="sendCover">📘 Make Cover</button>
-            </div>
-        </div>
-        <div id="status" class="status-msg"></div>
-
-        <div class="image-display" id="imgContainer">
-            <img id="aiImage" src="" alt="KDP Generated Asset">
-            <br>
-            <a id="downloadBtn" class="download-link" href="#" target="_blank">📥 Download High-Resolution Image</a>
-        </div>
-    </div>
-
-    <script>
-        const promptText = document.getElementById('promptText');
-        const aiResponse = document.getElementById('aiResponse');
-        const aiImage = document.getElementById('aiImage');
-        const imgContainer = document.getElementById('imgContainer');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const status = document.getElementById('status');
-
-        // ১. রিয়েল ভয়েস ইনপুট (Bangla + English)
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (SpeechRecognition) {
-            const recog = new SpeechRecognition();
-            recog.lang = 'bn-BD'; 
-            
-            document.getElementById('startVoice').addEventListener('click', () => {
-                recog.start();
-                status.innerText = "Listening... মুখে বলুন...";
-            });
-
-            recog.onresult = (e) => {
-                promptText.value = e.results[0][0].transcript;
-                status.innerText = "কথা রেকর্ড হয়েছে!";
-            };
-            recog.onerror = () => { status.innerText = "স্পষ্ট শোনা যায়নি, আবার চেষ্টা করুন।"; };
-            recog.onend = () => { if(status.innerText.includes("Listening")) status.innerText = ""; };
-        } else {
-            document.getElementById('startVoice').style.display = 'none';
-        }
-
-        // ২. KDP টেক্সট রিসার্চ ইঞ্জিন (Llama 3 / Gemini Powered)
-        document.getElementById('sendChat').addEventListener('click', async () => {
-            const text = promptText.value.trim();
-            if(!text) return alert("দয়া করে কিছু একটা লিখুন বা মুখে বলুন!");
-
-            aiResponse.innerText = "Analyzing KDP Data... গুছিয়ে লিখছি... 📊";
-            imgContainer.style.display = 'none';
-            status.innerText = "";
-
-            try {
-                const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(text + " (Provide a highly professional, copyright-free Amazon KDP standard response)")}`);
-                const reply = await res.text();
-                aiResponse.innerText = reply || "দুঃখিত, উত্তরটি তৈরি করা যায়নি। আবার চেষ্টা করুন।";
-            } catch (err) {
-                aiResponse.innerText = "নেটওয়ার্ক সমস্যা! দয়া করে ইন্টারনেট কানেকশন চেক করুন।";
-            }
-        });
-
-        // ৩. ইমেজ মেকিং হ্যান্ডলার (Coloring & Cover)
-        document.getElementById('sendColoring').addEventListener('click', () => generateAsset('coloring'));
-        document.getElementById('sendCover').addEventListener('click', () => generateAsset('cover'));
-
-        function generateAsset(type) {
-            const text = promptText.value.trim();
-            if(!text) return alert("কীসের ছবি তৈরি করতে চান তা বক্সে লিখুন!");
-
-            aiResponse.innerText = type === 'coloring' 
-                ? "KDP ইন্টেরিয়র কালারিং পেজ তৈরি হচ্ছে... 🎨 (কপিরাইট ফিল্টার সক্রিয়)" 
-                : "KDP বুক কভার আর্ট তৈরি হচ্ছে... 📘 (হাই-রেজোলিউশন মোড)";
-                
-            imgContainer.style.display = 'none';
-
-            let finalPrompt = "";
-            if (type === 'coloring') {
-                finalPrompt = `coloring page for kids, ${text}, copyright-free original vector art, pure solid white background, thick black bold outlines, no shading, no gradients, no grey lines, low detail, professional KDP interior, crisp line art style`;
-            } else {
-                finalPrompt = `premium Amazon KDP book cover design background, ${text}, high resolution 4k, vivid deep colors, professional digital concept art, commercial illustration, no text on image, master piece, ultra detailed`;
-            }
+            let finalPrompt = type === 'coloring' 
+                ? `coloring page for kids, ${text}, copyright-free, pure solid white background, thick black bold outlines, no shading, crisp line art style`
+                : `premium Amazon KDP book cover design background, ${text}, high resolution 4k, vivid deep colors, no text on image`;
 
             const seed = Math.floor(Math.random() * 9999999);
-            // KDP এর জন্য সবচেয়ে সেরা ফ্রেশ আউটপুট দিতে Flux মডেল ব্যবহার করা হয়েছে
             const imgUrl = `https://image.pollinations.ai/p/${encodeURIComponent(finalPrompt)}?width=1024&height=1024&seed=${seed}&model=flux&enhance=true`;
 
             aiImage.src = imgUrl;
-
             aiImage.onload = () => {
-                aiResponse.innerText = type === 'coloring'
-                    ? `"${text}" কালারিং পেজটি সফলভাবে তৈরি হয়েছে। এটি KDP-এর জন্য সম্পূর্ণ নিরাপদ।`
-                    : `"${text}" কভার আর্ট ব্যাকগ্রাউন্ডটি তৈরি হয়েছে।`;
-                
+                aiResponse.innerText = type === 'coloring' ? "কালারিং পেজটি সফলভাবে তৈরি হয়েছে।" : "কভার আর্ট ব্যাকগ্রাউন্ডটি তৈরি হয়েছে।";
                 downloadBtn.href = imgUrl;
                 imgContainer.style.display = 'block';
             };
-
-            aiImage.onerror = () => {
-                aiResponse.innerText = "ছবিটি তৈরি করা যায়নি। দয়া করে অন্য কোনো কী-ওয়ার্ড ব্যবহার করুন।";
-            };
+            aiImage.onerror = () => { aiResponse.innerText = "ছবিটি তৈরি করা যায়নি।"; };
         }
     </script>
 </body>
 </html>
-
-
-            const seed = Math.floor(Math.random() * 9999999);
-            // KDP এর জন্য সবচেয়ে সেরা ফ্রেশ আউটপুট দিতে Flux মডেল ব্যবহার করা হয়েছে
-            const imgUrl = `https://image.pollinations.ai/p/${encodeURIComponent(finalPrompt)}?width=1024&height=1024&seed=${seed}&model=flux&enhance=true`;
-
-            aiImage.src = imgUrl;
-
-            aiImage.onload = () => {
-                aiResponse.innerText = type === 'coloring'
-                    ? `"${text}" কালারিং পেজটি সফলভাবে তৈরি হয়েছে। এটি KDP-এর জন্য সম্পূর্ণ নিরাপদ।`
-                    : `"${text}" কভার আর্ট ব্যাকগ্রাউন্ডটি তৈরি হয়েছে।`;
-                
-                downloadBtn.href = imgUrl;
-                imgContainer.style.display = 'block';
-            };
-
-            aiImage.onerror = () => {
-                aiResponse.innerText = "ছবিটি তৈরি করা যায়নি। দয়া করে অন্য কোনো কী-ওয়ার্ড ব্যবহার করুন।";
-            };
-        }
-    </script>
-</body>
-</html>
-
