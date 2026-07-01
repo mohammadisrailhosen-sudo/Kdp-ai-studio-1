@@ -3,320 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Gaming Panel Store</title>
+    <title>ALL PANEL SELL - Premium Gaming Store</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            background: #0a0a0f;
-            color: #fff;
+            background: #0d0e12;
+            color: #f1f1f4;
             overflow-x: hidden;
             text-align: center;
+            padding-bottom: 80px;
         }
 
-        /* Background Glowing Animation */
-        .bg-glow {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 0, 128, 0.05) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
-            z-index: -1;
-            animation: rotateBg 20s linear infinite;
-        }
-
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Header / Hero Section */
+        /* Top Modern Animated Header */
         header {
-            padding: 50px 20px 20px;
-            animation: fadeInDown 1s ease;
+            padding: 60px 20px 30px;
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.05) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .logo {
-            font-size: 35px;
+        .brand-name {
+            font-size: 42px;
             font-weight: 900;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, #ff007f, #00f2fe);
+            background: linear-gradient(45deg, #00f2fe, #4facfe, #ff007f);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 242, 254, 0.5);
+            animation: shine 3s linear infinite;
             margin-bottom: 10px;
         }
 
-        .tagline {
-            font-size: 16px;
-            color: #00f2fe;
-            font-weight: bold;
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #8e9196;
+            font-weight: 500;
+            text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
         }
 
-        /* Game Modes Supported Section */
-        .modes-container {
-            max-width: 600px;
+        /* Support Box Banner */
+        .features-box {
+            max-width: 650px;
             margin: 30px auto;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 0, 128, 0.2);
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.1);
-            animation: fadeInUp 1.2s ease;
+            background: #16171d;
+            border: 1px solid #23252f;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
-        .modes-title {
+        .features-box h2 {
             font-size: 20px;
-            color: #ff007f;
-            margin-bottom: 15px;
-            font-weight: bold;
+            color: #00f2fe;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .mode-list {
-            list-style: none;
+        .feature-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            align-items: center;
         }
 
-        .mode-item {
-            background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 10px 20px;
-            border-radius: 50px;
-            width: 90%;
-            max-width: 400px;
+        .feature-item {
+            background: #1e202b;
+            padding: 12px 20px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: 0.3s;
+            border-left: 4px solid #ff007f;
+            transition: 0.2s;
         }
 
-        .mode-item:hover {
-            transform: scale(1.03);
-            background: rgba(0, 242, 254, 0.15);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        .feature-item:hover {
+            transform: translateX(5px);
+            background: #232635;
         }
 
-        /* Price List Section */
-        .price-section {
-            max-width: 900px;
-            margin: 40px auto;
+        /* Pricing Section */
+        .price-container {
+            max-width: 950px;
+            margin: 45px auto;
             padding: 0 20px;
         }
 
-        .price-title {
+        .section-title {
             font-size: 24px;
             font-weight: bold;
+            margin-bottom: 30px;
             color: #fff;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
-        .cards-grid {
+        .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
         }
 
-        .price-card {
-            background: linear-gradient(135deg, rgba(20, 20, 30, 0.8), rgba(10, 10, 15, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .card {
+            background: #16171d;
+            border: 1px solid #23252f;
             border-radius: 24px;
-            padding: 30px 20px;
+            padding: 35px 24px;
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            animation: fadeInUp 1.5s ease;
+            transition: all 0.3s ease;
         }
 
-        /* Highlight Popular Card */
-        .price-card.popular {
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #00f2fe;
+            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.15);
+        }
+
+        /* Premium Popular Tag */
+        .card.hot-deal {
             border-color: #ff007f;
-            box-shadow: 0 0 25px rgba(255, 0, 128, 0.25);
+            box-shadow: 0 10px 25px rgba(ff, 0, 128, 0.1);
         }
 
-        .price-card.popular::before {
-            content: 'POPULAR';
+        .card.hot-deal::before {
+            content: '🔥 POPULAR';
             position: absolute;
             top: 15px;
-            right: -30px;
+            right: 15px;
             background: #ff007f;
             color: #fff;
             font-size: 10px;
-            font-weight: bold;
-            padding: 4px 30px;
-            transform: rotate(45deg);
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
         }
 
-        .price-card:hover {
-            transform: translateY(-10px);
-            border-color: #00f2fe;
-            box-shadow: 0 15px 30px rgba(0, 242, 254, 0.2);
-        }
-
-        .duration {
+        .card .time {
             font-size: 18px;
-            color: #aaa;
-            margin-bottom: 15px;
+            color: #8e9196;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
 
-        .price-card:hover .duration {
+        .card:hover .time {
             color: #00f2fe;
         }
 
-        .cost {
-            font-size: 32px;
+        .card .amount {
+            font-size: 34px;
             font-weight: 800;
             color: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        /* Glowing WhatsApp Button inside card */
-        .buy-btn {
-            display: inline-block;
+        /* Order Button styling */
+        .order-btn {
+            display: block;
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
-            background-size: 200% auto;
-            color: white;
+            padding: 14px;
+            background: #1e202b;
+            color: #00f2fe;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: bold;
             font-size: 15px;
-            transition: 0.5s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            transition: 0.3s;
         }
 
-        .buy-btn:hover {
-            background-position: right center;
-            box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+        .card:hover .order-btn {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #0d0e12;
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
         }
 
-        /* Sticky Footer WhatsApp Float */
-        .floating-wp {
+        .card.hot-deal .order-btn {
+            border-color: rgba(255, 0, 128, 0.4);
+            color: #ff007f;
+        }
+
+        .card.hot-deal:hover .order-btn {
+            background: linear-gradient(45deg, #ff007f, #ff758c);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 0, 128, 0.4);
+        }
+
+        /* Floating Bottom Bar Container */
+        .wp-float {
             position: fixed;
             bottom: 25px;
             right: 25px;
             background: #25d366;
-            color: white;
-            padding: 15px 25px;
+            color: #fff;
+            padding: 14px 24px;
             border-radius: 50px;
             font-weight: bold;
+            font-size: 15px;
             text-decoration: none;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            z-index: 100;
-            animation: pulse 2s infinite, fadeInUp 1.8s ease;
+            gap: 8px;
+            z-index: 999;
+            animation: bounceBtn 2s infinite;
         }
 
-        /* Animations */
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bounceBtn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         @media (max-width: 480px) {
-            .logo { font-size: 28px; }
-            .price-card { padding: 20px 15px; }
-            .floating-wp { bottom: 15px; right: 15px; padding: 12px 20px; font-size: 14px; }
+            .brand-name { font-size: 32px; }
+            .card { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-
-    <!-- Header Section -->
+    <!-- Header Area -->
     <header>
-        <div class="logo">🔥 VIP PANEL HUB 🔥</div>
-        <div class="tagline">১০০% এন্টি-ব্যান ও সাশ্রয়ী মূল্যে সেরা গেমিং প্যানেল</div>
+        <div class="brand-name">ALL PANEL SELL</div>
+        <div class="subtitle">Premium No-Ban Gaming Panels Store</div>
     </header>
 
-    <!-- Game Modes Supported -->
-    <section class="modes-container">
-        <div class="modes-title">🎮 গেম মোড সাপোর্ট (Game Modes Supported)</div>
-        <ul class="mode-list">
-            <li class="mode-item"><span>✅ BR Mode</span> <span>(Bermuda Ranked)</span></li>
-            <li class="mode-item"><span>✅ CS Mode</span> <span>(Clash Squad Ranked)</span></li>
-            <li class="mode-item"><span>✅ Custom Match</span> <span>(১০০% কাজ করবে)</span></li>
-        </ul>
+    <!-- Supported Modes -->
+    <section class="features-box">
+        <h2>🎮 গেম মোড সাপোর্ট (Game Modes Supported)</h2>
+        <div class="feature-list">
+            <div class="feature-item"><span>✅ BR Mode</span> <span>(Bermuda Ranked)</span></div>
+            <div class="feature-item"><span>✅ CS Mode</span> <span>(Clash Squad Ranked)</span></div>
+            <div class="feature-item"><span>✅ Custom Match</span> <span>(১০০% কাজ করবে)</span></div>
+        </div>
     </section>
 
-    <!-- Price List Section -->
-    <section class="price-section">
-        <div class="price-title">💰 প্রাইজ লিস্ট (সাশ্রয়ী ও ফিক্সড মূল্য)</div>
+    <!-- Pricing Area -->
+    <section class="price-container">
+        <div class="section-title">💰 প্রাইজ লিস্ট (সাশ্রয়ী ও ফিক্সড মূল্য)</div>
         
-        <div class="cards-grid">
+        <div class="grid-layout">
             <!-- 15 Days Plan -->
-            <div class="price-card">
-                <div class="duration">⏱️ ১৫ দিন মেয়াদী</div>
-                <div class="cost">২০০ টাকা</div>
-                <a href="https://wa.me/8801727501138?text=Hello,%20ami%2015%20din%20er%20panel%20ta%20nite%20chai" target="_blank" class="buy-btn">এখনই কিনুন 🛒</a>
+            <div class="card">
+                <div class="time">⏱️ ১৫ দিন মেয়াদী</div>
+                <div class="amount">২০০ টাকা</div>
+                <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20theke%20ami%2015%20din%20er%20panel%20nite%20chai" target="_blank" class="order-btn">এখনই কিনুন 🛒</a>
             </div>
 
             <!-- 1 Month Plan -->
-            <div class="price-card popular">
-                <div class="duration">⭐ ১ মাস মেয়াদী</div>
-                <div class="cost">৩৫০ টাকা</div>
-                <a href="https://wa.me/8801727501138?text=Hello,%20ami%201%20mash%20er%20panel%20ta%20nite%20chai" target="_blank" class="buy-btn">এখনই কিনুন 🛒</a>
+            <div class="card hot-deal">
+                <div class="time">⭐ ১ মাস মেয়াদী</div>
+                <div class="amount">৩৫০ টাকা</div>
+                <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20theke%20ami%201%20mash%20er%20panel%20nite%20chai" target="_blank" class="order-btn">এখনই কিনুন 🛒</a>
             </div>
 
             <!-- 2 Month Plan -->
-            <div class="price-card">
-                <div class="duration">🚀 ২ মাস মেয়াদী</div>
-                <div class="cost">৪৫০ টাকা</div>
-                <a href="https://wa.me/8801727501138?text=Hello,%20ami%202%20mash%20er%20panel%20ta%20nite%20chai" target="_blank" class="buy-btn">এখনই কিনুন 🛒</a>
+            <div class="card">
+                <div class="time">🚀 ২ মাস মেয়াদী</div>
+                <div class="amount">৪৫০ টাকা</div>
+                <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20theke%20ami%202%20mash%20er%20panel%20nite%20chai" target="_blank" class="order-btn">এখনই কিনুন 🛒</a>
             </div>
 
             <!-- 4 Month Plan -->
-            <div class="price-card">
-                <div class="duration">👑 ৪ মাস মেয়াদী</div>
-                <div class="cost">৬০০ টাকা</div>
-                <a href="https://wa.me/8801727501138?text=Hello,%20ami%204%20mash%20er%20panel%20ta%20nite%20chai" target="_blank" class="buy-btn">এখনই কিনুন 🛒</a>
+            <div class="card">
+                <div class="time">👑 ৪ মাস মেয়াদী</div>
+                <div class="amount">৬০০ টাকা</div>
+                <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20theke%20ami%204%20mash%20er%20panel%20nite%20chai" target="_blank" class="order-btn">এখনই কিনুন 🛒</a>
             </div>
 
             <!-- 1 Year Plan -->
-            <div class="price-card">
-                <div class="duration">🏆 ১ বছর মেয়াদী</div>
-                <div class="cost">১০০০ টাকা</div>
-                <a href="https://wa.me/8801727501138?text=Hello,%20ami%201%20bosor%20er%20panel%20ta%20nite%20chai" target="_blank" class="buy-btn">এখনই কিনুন 🛒</a>
+            <div class="card">
+                <div class="time">🏆 ১ বছর মেয়াদী</div>
+                <div class="amount">১০০০ টাকা</div>
+                <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20theke%20ami%201%20bosor%20er%20panel%20nite%20chai" target="_blank" class="order-btn">এখনই কিনুন 🛒</a>
             </div>
         </div>
     </section>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/8801727501138?text=Hello,%20ami%20gaming%20panel%20সম্পর্কে%20জানতে%20চাই।" class="floating-wp" target="_blank">
-        💬 হোয়াটসঅ্যাপে যোগাযোগ করুন
+    <!-- Sticky Contact Button -->
+    <a href="https://wa.me/8801727501138?text=Hello,%20ALL%20PANEL%20SELL%20store%20সম্পর্কে%20জানতে%20চাই।" class="wp-float" target="_blank">
+        💬 সরাসরি মেসেজ করুন
     </a>
 
 </body>
