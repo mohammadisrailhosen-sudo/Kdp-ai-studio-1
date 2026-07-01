@@ -1,1 +1,1 @@
-# Kdp-ai-studio-1
+# panel-sell
